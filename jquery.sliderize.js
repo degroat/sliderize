@@ -45,9 +45,14 @@
 			html += '</div>';
 			html += '<form method=POST>';
 				html += '<input type="hidden" id="sliderize-value-width" name="width" value="" />';
+				html += '<input type="hidden" id="sliderize-value-target-width" name="target_width" value="'+target_width+'" />';
+				html += '<input type="hidden" id="sliderize-value-image-width" name="image_width" value="" />';
 				html += '<input type="hidden" id="sliderize-value-height" name="height" value="" />';
-				html += '<input type="hidden" id="sliderize-value-top" name="top" value="" />';
-				html += '<input type="hidden" id="sliderize-value-left" name="left" value="" />';
+				html += '<input type="hidden" id="sliderize-value-target-height" name="target_height" value="'+target_height+'" />';
+				html += '<input type="hidden" id="sliderize-value-image-height" name="image_height" value="" />';
+				html += '<input type="hidden" id="sliderize-value-top" name="top" value="0" />';
+				html += '<input type="hidden" id="sliderize-value-left" name="left" value="0" />';
+				html += '<input type="hidden" id="sliderize-value-url" name="url" value="'+url+'" />';
 				html += '<input type="submit" id="sliderize-value-save" name="save" value="Save" />';
 			html += '</form>';
 
@@ -122,6 +127,9 @@
 				image_width = $("#sliderize-image").width();
 				image_height = $("#sliderize-image").height();
 
+				$("#sliderize-value-image-height").val(image_height);
+				$("#sliderize-value-image-width").val(image_width);
+
 				// min_width is the minimum width that the image can be set
 				// to without going below the target height or width
 				var ratio = image_width / image_height;
@@ -133,6 +141,12 @@
 				{
 					min_width = target_width;
 				}
+
+				if(min_width < target_width)
+				{
+					min_width = target_width;
+				}
+
 
 				$.set_image_width(min_width);
 				$.set_image_height(Math.floor(width * (image_height / image_width)));
