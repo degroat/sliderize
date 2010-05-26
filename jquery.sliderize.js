@@ -122,9 +122,13 @@
 			// Grab the image and see if we have a width yet
 			var w = $("#sliderize-image").width();
 
-			if(w > 0)
+			// Why 24? Because Firefox and IE seem to return 24 as the
+			// width of an image that hasn't been completely loaded yet.
+			// This means, however, that we can never re-size an image
+			// below 24 pixels
+			if(w > 24)
 			{
-				image_width = $("#sliderize-image").width();
+				image_width = w;
 				image_height = $("#sliderize-image").height();
 
 				$("#sliderize-value-image-height").val(image_height);
