@@ -5,9 +5,9 @@
 if(!empty($_POST['save']))
 {
 	// $filename is where you want to save the filename to
-	// If you leave the filename blank, the image will load in your 
+	// If you leave the filename NULL, the image will load in your 
 	// browser instead of save on the server
-	$filename = "";
+	$filename = NULL;
 	//$filename = "test.jpg";
 	save_resized_image($filename, $_POST);
 	exit;
