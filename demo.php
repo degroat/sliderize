@@ -8,6 +8,7 @@ if(!empty($_POST['save']))
 	// If you leave the filename blank, the image will load in your 
 	// browser instead of save on the server
 	$filename = "";
+	//$filename = "test.jpg";
 	save_resized_image($filename, $_POST);
 	exit;
 }
@@ -42,7 +43,7 @@ function save_resized_image($filename, $values)
 	}
 
 	$resized = imagecreatetruecolor($target_width, $target_height);
-	imagecopyresampled ($resized, $original, 0, 0, $left , $top, $width , $height , $image_width , $image_height );
+	imagecopyresampled ($resized, $original, 0, 0, $left*($image_width/$width) , $top*($image_width/$width), $width , $height , $image_width , $image_height );
 
 	switch ($extension)
    	{
@@ -84,7 +85,7 @@ function save_resized_image($filename, $values)
 			$(document).ready(function() 
 			{
 				var image = 'http://farm5.static.flickr.com/4029/4534348997_c75703432a_b.jpg';
-				$("#sliderize").sliderize(image, {height:300, width:545});
+				$("#sliderize").sliderize(image, {height:300, width:500});
 			});
 		</script>
 	</head>
