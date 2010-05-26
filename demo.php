@@ -84,7 +84,7 @@ function save_resized_image($filename, $values)
 		<script>
 			$(document).ready(function() 
 			{
-				var image = 'http://farm5.static.flickr.com/4029/4534348997_c75703432a_b.jpg';
+				var image = 'http://www.degroat.net/pix/tinygrab/bb794bff9ed7666bd4ac78c98b15e0ee.png';
 				$("#sliderize").sliderize(image, {height:300, width:500});
 			});
 		</script>
