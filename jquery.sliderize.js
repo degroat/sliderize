@@ -59,6 +59,8 @@
 			$(this).append(html);
 
 
+			// Now we're waiting for the image to load before
+			// we do anything else
 			$('#sliderize-image').attr('src', url).load(function() 
 			{
 				image_width = $("#sliderize-image").width();
@@ -92,8 +94,6 @@
 				$.load_sliders();
 			});
 
-			// Load the image and
-			//$.get_image_size();
 		};
 
 
@@ -151,54 +151,6 @@
 			sliders_loaded = 1;				
 		}
 
-		$.get_image_size = function()
-		{
-			// Grab the image and see if we have a width yet
-			var w = $("#sliderize-image").width();
-
-			// Why 24? Because Firefox and IE seem to return 24 as the
-			// width of an image that hasn't been completely loaded yet.
-			// This means, however, that we can never re-size an image
-			// below 24 pixels
-			if(w > 24)
-			{
-				image_width = w;
-				image_height = $("#sliderize-image").height();
-
-				$("#sliderize-value-image-height").val(image_height);
-				$("#sliderize-value-image-width").val(image_width);
-
-				// min_width is the minimum width that the image can be set
-				// to without going below the target height or width
-				var ratio = image_width / image_height;
-				if(ratio > 1)
-				{
-					min_width = Math.ceil((target_height / image_height) * image_width);
-				}
-				else
-				{
-					min_width = target_width;
-				}
-
-				if(min_width < target_width)
-				{
-					min_width = target_width;
-				}
-
-
-				$.set_image_width(min_width);
-				$.set_image_height(Math.floor(width * (image_height / image_width)));
-				$("#sliderize-image").show();
-
-				$.load_sliders();
-			}
-			else
-			{
-				// We don't have a width yet, so try again in 100 milliseconds
-				setTimeout("$.get_image_size();", 100);
-			}
-
-		}
 
 		$.set_image_width = function(val)
 		{

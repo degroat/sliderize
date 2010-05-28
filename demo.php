@@ -84,7 +84,7 @@ function save_resized_image($filename, $values)
 		<script>
 			$(document).ready(function() 
 			{
-				var image = 'http://ecx.images-amazon.com/images/I/81j7eo3SSiS._AdidasShoesSports_.jpg';
+				var image = 'http://www.degroat.net/pix/tinygrab/bb794bff9ed7666bd4ac78c98b15e0ee.png';
 				$("#sliderize").sliderize(image, {height:300, width:500});
 			});
 		</script>
