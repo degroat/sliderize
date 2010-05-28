@@ -58,8 +58,42 @@
 
 			$(this).append(html);
 
+
+			$('#sliderize-image').attr('src', url).load(function() 
+			{
+				image_width = $("#sliderize-image").width();
+				image_height = $("#sliderize-image").height();
+
+				$("#sliderize-value-image-height").val(image_height);
+				$("#sliderize-value-image-width").val(image_width);
+
+				// min_width is the minimum width that the image can be set
+				// to without going below the target height or width
+				var ratio = image_width / image_height;
+				if(ratio > 1)
+				{
+					min_width = Math.ceil((target_height / image_height) * image_width);
+				}
+				else
+				{
+					min_width = target_width;
+				}
+
+				if(min_width < target_width)
+				{
+					min_width = target_width;
+				}
+
+
+				$.set_image_width(min_width);
+				$.set_image_height(Math.floor(width * (image_height / image_width)));
+				$("#sliderize-image").show();
+
+				$.load_sliders();
+			});
+
 			// Load the image and
-			$.get_image_size();
+			//$.get_image_size();
 		};
 
 
