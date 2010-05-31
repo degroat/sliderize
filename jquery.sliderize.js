@@ -27,12 +27,13 @@
 			{
 				target_height = options.height;
 			}
-
+	
+			var sliderize = this;
 			var slider_width = target_width - 20;
 
 			// Build HTML to append
 			var html = "";
-			html += '<div id="sliderize-outter">';
+			html += '<div id="sliderize-outter" style="display:none;">';
 				html += '<div id="sliderize-image-box" style="border:1px solid #000; width:'+target_width+'px; height:'+target_height+'px; overflow:hidden; background:#000; position:relative;">';
 					html += '<img id="sliderize-image" src="' + url + '" style="display:none; position:absolute;">';
 				html += '</div>';
@@ -42,30 +43,35 @@
 				html += '<div id="sliderize-xaxis" style="width:'+slider_width+'px; margin:10px;"></div>';
 				html += '<span style="font-size:12px; font-weight:bold; font-family:Arial; display:block; margin:5px; color:#666;">Y-AXIS:</span>';
 				html += '<div id="sliderize-yaxis" style="width:'+slider_width+'px; margin:10px;"></div>';
+				html += '<form method=POST>';
+					html += '<input type="hidden" id="sliderize-value-width" name="width" value="" />';
+					html += '<input type="hidden" id="sliderize-value-target-width" name="target_width" value="'+target_width+'" />';
+					html += '<input type="hidden" id="sliderize-value-image-width" name="image_width" value="" />';
+					html += '<input type="hidden" id="sliderize-value-height" name="height" value="" />';
+					html += '<input type="hidden" id="sliderize-value-target-height" name="target_height" value="'+target_height+'" />';
+					html += '<input type="hidden" id="sliderize-value-image-height" name="image_height" value="" />';
+					html += '<input type="hidden" id="sliderize-value-top" name="top" value="0" />';
+					html += '<input type="hidden" id="sliderize-value-left" name="left" value="0" />';
+					html += '<input type="hidden" id="sliderize-value-url" name="url" value="'+url+'" />';
+					html += '<input type="submit" id="sliderize-value-save" name="save" value="Save" />';
+				html += '</form>';
 			html += '</div>';
-			html += '<form method=POST>';
-				html += '<input type="hidden" id="sliderize-value-width" name="width" value="" />';
-				html += '<input type="hidden" id="sliderize-value-target-width" name="target_width" value="'+target_width+'" />';
-				html += '<input type="hidden" id="sliderize-value-image-width" name="image_width" value="" />';
-				html += '<input type="hidden" id="sliderize-value-height" name="height" value="" />';
-				html += '<input type="hidden" id="sliderize-value-target-height" name="target_height" value="'+target_height+'" />';
-				html += '<input type="hidden" id="sliderize-value-image-height" name="image_height" value="" />';
-				html += '<input type="hidden" id="sliderize-value-top" name="top" value="0" />';
-				html += '<input type="hidden" id="sliderize-value-left" name="left" value="0" />';
-				html += '<input type="hidden" id="sliderize-value-url" name="url" value="'+url+'" />';
-				html += '<input type="submit" id="sliderize-value-save" name="save" value="Save" />';
-			html += '</form>';
 
-			$(this).append(html);
+			$(this).html(html);
 
 
 			// Now we're waiting for the image to load before
 			// we do anything else
 			$('#sliderize-image').attr('src', url).load(function() 
 			{
+				// Show the sliderize HTMl
+				$("#sliderize-outter").show();
+
+				// store the image height and width now that it's loaded
 				image_width = $("#sliderize-image").width();
 				image_height = $("#sliderize-image").height();
 
+				// Store the image height and width in the form values to be used on submission
 				$("#sliderize-value-image-height").val(image_height);
 				$("#sliderize-value-image-width").val(image_width);
 
@@ -80,7 +86,6 @@
 				{
 					min_width = target_width;
 				}
-
 				if(min_width < target_width)
 				{
 					min_width = target_width;
@@ -90,10 +95,14 @@
 				$.set_image_width(min_width);
 				$.set_image_height(Math.floor(width * (image_height / image_width)));
 				$("#sliderize-image").show();
-
 				$.load_sliders();
+			})
+			.error(function () 
+			{
+				var error_html = "";
+				error_html += '<div style="font-family:arial; color:#900;">Error occurred loading image: '+url+'</div>';
+				$(sliderize).html(error_html);
 			});
-
 		};
 
 
